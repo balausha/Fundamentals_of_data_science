@@ -8,7 +8,7 @@ Created on Thu Apr 30 16:40:32 2023
 import numpy as np
 import matplotlib.pyplot as plt
 
-arr = np.genfromtxt("C:/Users/Lenovo/Desktop/UK/Hertfordshire/SEM 01/Fundamentals of Data Science/data5.csv", delimiter = ',')
+arr = np.genfromtxt('data5.csv', delimiter = ',')
 
 x, y = np.histogram(arr, bins = 20)
 x = np.append(x, 0)
@@ -21,7 +21,10 @@ lower_range = 0.8 * W
 upper_range = 1.2 * W
 
 # Calculate the fraction of babies in the range
-f = np.logical_and(y >= lower_range, y <= upper_range).mean()
+# the value X, which is the fraction of babies born weighting between 0.8  ̃W and 1.2  ̃W
+num_babies_within_range = len([w for w in y if lower_range <= w <= upper_range])
+X = num_babies_within_range / len(y)
+X = np.round(X, 5)
 
 #plot
 plt.figure(figsize = (6, 4))
@@ -29,10 +32,11 @@ plt.figure(figsize = (6, 4))
 plt.bar(y, x, label = "33% of newborns are born with a weight above X")
 #mean value
 #plt.plot(W, 45, 'k--')
-plt.text(3.31, 10, "Mean value is 3.3193", c = "black", fontsize = 10)
+plt.plot([W, W], [0, np.max(x) + 0.002], 'k--', c = "black")
+plt.text(3.33, 5, "Mean value is 3.3193", c = "black", fontsize = 10)
 #X value
 #plt.plot(x, 30, 'k--')
-plt.text(3.9973, 30, "X value is 3.9973", c = "black", fontsize = 10)
+plt.text(3.90, 35, f"X value is {X}", c = "black", fontsize = 10)
 #title, legends
 plt.title("Distribution of new born in certain regions of Europe", fontsize = 10)
 plt.xlabel("Weights of newborn babies (Distribution)", fontsize = 10)
